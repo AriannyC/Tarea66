@@ -1,0 +1,6 @@
+@Tarea6_HostAddress = http://localhost:5211
+
+GET {{Tarea6_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
