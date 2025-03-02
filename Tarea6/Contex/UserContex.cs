@@ -10,6 +10,7 @@ namespace Tarea6.Contex
         public DbSet<User> users { get; set; }
         public DbSet<RegiUs> RegiUss { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //fluen Api

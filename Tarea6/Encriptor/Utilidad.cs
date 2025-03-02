@@ -1,19 +1,29 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Azure;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Http;
+
 using System.Text;
 using Tarea6.Models;
+using System.Net.Http;
+using System.Drawing;
 
 namespace Tarea6.Encriptor
 {
     public class Utilidad
     {
+        public static RegiUs res = new RegiUs();
+
         private readonly IConfiguration _configuration;
-        public Utilidad(IConfiguration configuration)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public Utilidad(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
 
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
 
         }
 
@@ -73,6 +83,37 @@ namespace Tarea6.Encriptor
 
 
 
+        }
+
+
+        public Refresh refrestoken()
+        {
+            var refresh = new Refresh
+            {
+                refreshtoken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64))
+                
+            };
+            return refresh;
+            
+        }
+
+        public void SetRefreshToken(Refresh refreshh)
+        {
+            var cookies = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires= refreshh.Expires,
+               
+            };
+
+
+            _httpContextAccessor.HttpContext?.Response.Cookies.Append("refresh", refreshh.refreshtoken, cookies);
+
+            res.refreshtoken1= refreshh.refreshtoken;
+            res.TokenExpired= refreshh.Expires;
+            res.TokenCreated = refreshh.Created;
+                     
+            
         }
 
 
