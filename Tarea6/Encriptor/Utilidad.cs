@@ -55,6 +55,7 @@ namespace Tarea6.Encriptor
 
         public string GeneratJTW(RegiUs regiUs)
         {
+            
 
             var userclaims = new[]
             {
@@ -70,7 +71,7 @@ namespace Tarea6.Encriptor
 
             var jwrconfi = new JwtSecurityToken(
                 claims: userclaims,
-                expires: DateTime.UtcNow.AddMinutes(40),
+                expires: DateTime.UtcNow.AddMinutes(1),
                  signingCredentials: credential
 
                              );
@@ -90,7 +91,8 @@ namespace Tarea6.Encriptor
         {
             var refresh = new Refresh
             {
-                refreshtoken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64))
+                refreshtoken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+                Expires= DateTime.Now.AddMinutes(1)
                 
             };
             return refresh;
@@ -102,18 +104,18 @@ namespace Tarea6.Encriptor
             var cookies = new CookieOptions
             {
                 HttpOnly = true,
-                Expires= refreshh.Expires,
-               
+                Expires = refreshh.Expires,
+
             };
 
 
             _httpContextAccessor.HttpContext?.Response.Cookies.Append("refresh", refreshh.refreshtoken, cookies);
 
-            res.refreshtoken1= refreshh.refreshtoken;
-            res.TokenExpired= refreshh.Expires;
+            res.refreshtoken1 = refreshh.refreshtoken;
+            res.TokenExpired = refreshh.Expires;
             res.TokenCreated = refreshh.Created;
-                     
-            
+
+
         }
 
 

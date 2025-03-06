@@ -64,7 +64,7 @@ namespace Tarea6.Controllers
             if (ss.Any(u => u.Email == user.Email))
             {
                 return BadRequest("El correo electrónico ya está en uso.");
-            }
+            } 
             await _context.Addasync(user);
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
@@ -82,6 +82,20 @@ namespace Tarea6.Controllers
             await _context.Deleteasync(user);
             return NoContent();
         }
+
+        [HttpGet("startswith")]
+        public async Task<ActionResult<User>> letra()
+        {
+            var stt = await _context.Getallasync();
+
+            var pru = stt.Where(x => x.Name.StartsWith("a"));
+            
+           
+
+            return Ok(pru);
+        }
+       
+
 
     }
 }

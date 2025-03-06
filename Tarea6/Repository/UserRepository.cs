@@ -44,6 +44,9 @@ namespace Tarea6.Repository
         {
             return await _contex.Set<User>().FindAsync(id);
         }
+
+      
+
     }
 }
 
