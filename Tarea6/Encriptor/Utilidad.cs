@@ -99,24 +99,7 @@ namespace Tarea6.Encriptor
             
         }
 
-        public void SetRefreshToken(Refresh refreshh)
-        {
-            var cookies = new CookieOptions
-            {
-                HttpOnly = true,
-                Expires = refreshh.Expires,
-
-            };
-
-
-            _httpContextAccessor.HttpContext?.Response.Cookies.Append("refresh", refreshh.refreshtoken, cookies);
-
-            res.refreshtoken1 = refreshh.refreshtoken;
-            res.TokenExpired = refreshh.Expires;
-            res.TokenCreated = refreshh.Created;
-
-
-        }
+       
 
 
     }
